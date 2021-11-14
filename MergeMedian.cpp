@@ -32,7 +32,7 @@ class MergeMedian : public Iop
 {
 	private:
 		int _bbox;
-  
+
 	public:
 		int minimum_inputs() const {return 2;}
 		int maximum_inputs() const {return 100;}
@@ -91,7 +91,7 @@ const char* MergeMedian::input_label(int input, char* buffer) const
 void MergeMedian::knobs(Knob_Callback f)
 {
 	Enumeration_knob(f, &_bbox, bbox_names, "bbox", "set bbox to");
-    Tooltip(f, "Clip one input to match the other if wanted");
+	Tooltip(f, "Clip one input to match the other if wanted");
 }
 
 
@@ -146,14 +146,14 @@ void MergeMedian::engine(int y, int x, int r, ChannelMask channels, Row& outrow)
 			const float* inptr = inrow[z] + x;
 			
 			for (int xx = 0; xx < r - x; xx++)
-    		{
+			{
 				values[(input_count * xx) + i] = *inptr++;
-    		}
+			}
 		}
 
 		//get median value of list for each pixel and assign value to out-pointer
 		for (int xx = 0; xx < r - x; xx++)
-    	{
+		{
 			std::sort(values + (input_count * xx), values + (input_count * xx) + input_count);
 
 			if (input_count % 2 == 1)
@@ -162,7 +162,7 @@ void MergeMedian::engine(int y, int x, int r, ChannelMask channels, Row& outrow)
 				value = (values[(input_count * xx) + (input_count / 2)] + values[(input_count * xx) + (input_count / 2) - 1]) / 2;
 			
 			*outptr++ = value;
-    	}
+		}
 
 		delete[] values;
 	}
